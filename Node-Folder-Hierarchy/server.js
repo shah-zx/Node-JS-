@@ -53,6 +53,20 @@ app.get("/" , function(req , res) {
     res.sendFile(__dirname + '/index.html')
 });
 
+// Saving the items to database - 
+
+app.post('/items' , async(req, res) => {
+  
+  try {
+    const {name , description} = req.body;
+    const naiCheez = Cheez({name , description});
+    await naiCheez.save();
+    res.status(201).send("Item added successfully");
+  } catch (error) {
+    console.error(error);
+      res.status(500).send(error);
+  }
+});
 
 app.listen(port , () => {
     console.log(`server listening at port ${port}`);
