@@ -54,6 +54,23 @@ app.get("/" , function(req , res) {
 });
 
 
+// Adding items to our db - 
+
+app.post("/items" , async (req , res) => {
+ try {
+    const {name , description} = req.body;
+    const newItem = Cheez({name , description});
+    newItem.save();
+    res.status(201).send("Item added successfully");
+ }
+ catch (err) {
+    console.error(err);
+    res.status(500).send("Server Failure");
+ }
+});
+
+// Server listening on port - 
+
 app.listen(port , () => {
     console.log(`server listening at port ${port}`);
 })
